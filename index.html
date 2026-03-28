@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matcha Web | NotVen0x</title>
+    <title>Matcha Web | Ven0x</title>
     <style>
         :root {
             --matcha-dark: #556b2f;
@@ -11,7 +11,7 @@
             --matcha-cream: #fefae0;
             --matcha-soft: #e9f5db;
             --matcha-accent: #adc178;
-            --glass: rgba(255, 255, 255, 0.8);
+            --glass: rgba(255, 255, 255, 0.85);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -20,135 +20,156 @@
             background-size: 40px 40px;
             font-family: 'Segoe UI', sans-serif;
             color: #283618;
-            line-height: 1.6;
+            min-height: 100vh;
         }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; padding: 60px 0; }
-        .badge {
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        header { text-align: center; padding-bottom: 40px; }
+        h1 { font-size: 3.5rem; color: var(--matcha-dark); letter-spacing: -2px; }
+        .badge { background: var(--matcha-dark); color: white; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .tab-btn {
+            padding: 12px 25px;
+            border: 2px solid var(--matcha-dark);
+            background: transparent;
+            color: var(--matcha-dark);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
             background: var(--matcha-dark);
             color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
-        h1 {
-            font-size: 4rem;
-            color: var(--matcha-dark);
-            margin: 15px 0;
-            letter-spacing: -2px;
-        }
-        .hero-text { font-size: 1.2rem; color: #606c38; max-width: 600px; margin: 0 auto; }
-        .main-card {
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
             background: var(--glass);
             backdrop-filter: blur(10px);
             border: 2px solid var(--matcha-accent);
-            border-radius: 30px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            margin-bottom: 50px;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
-        .btn {
+
+        .btn-dl {
             display: inline-block;
             background: var(--matcha-dark);
             color: white;
-            padding: 18px 45px;
-            border-radius: 15px;
+            padding: 15px 40px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 800;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(85, 107, 47, 0.2);
-        }
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(85, 107, 47, 0.4);
-            background: #3e4f22;
-        }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px; }
-        .f-card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            border-bottom: 4px solid var(--matcha-accent);
-        }
-        .f-card h3 { color: var(--matcha-dark); margin-bottom: 10px; }
-        .guide {
-            background: #283618;
-            color: var(--matcha-soft);
-            padding: 40px;
-            border-radius: 30px;
-            text-align: left;
-        }
-        .guide h2 { color: var(--matcha-accent); margin-bottom: 20px; }
-        .step { margin-bottom: 15px; display: flex; align-items: flex-start; }
-        .step-num {
-            background: var(--matcha-accent);
-            color: #283618;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
             font-weight: bold;
-            flex-shrink: 0;
+            margin: 20px 0;
+            transition: 0.3s;
         }
-        footer { text-align: center; margin-top: 60px; font-size: 14px; color: #bc6c25; }
+        .btn-dl:hover { transform: scale(1.05); background: #3e4f22; }
+
+        .guide-box { background: #283618; color: white; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: left; }
+        .guide-box h3 { color: var(--matcha-accent); margin-bottom: 15px; }
+        .step { margin-bottom: 10px; display: flex; gap: 10px; font-size: 14px; }
+        .step-n { background: var(--matcha-accent); color: #283618; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+
+        .credits-list { list-style: none; text-align: left; }
+        .credits-list li { padding: 10px; border-bottom: 1px solid var(--matcha-accent); display: flex; justify-content: space-between; }
+        .social-btn { color: var(--matcha-dark); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--matcha-dark); }
+        
+        footer { text-align: center; margin-top: 40px; font-size: 12px; opacity: 0.7; }
     </style>
 </head>
 <body>
+
 <div class="container">
     <header>
-        <span class="badge">GNU GPL v3 Licensed</span>
-        <h1>MATCHA WEB</h1>
-        <p class="hero-text">The elite, cloud-synced script executor for browser games. Built for speed, optimized for dominance.</p>
+        <span class="badge">v3.1 Build</span>
+        <h1>MATCHA HUB</h1>
+        <p>The Central Hub for Ven0x's Web Modding Suite.</p>
     </header>
-    <div class="main-card">
-        <p style="margin-bottom: 10px; font-weight: bold; color: var(--matcha-dark);">LATEST RELEASE: v3.0 (Cloud Edition)</p>
-        <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="btn">DOWNLOAD EXTENSION (.ZIP)</a>
-        <p style="margin-top: 15px; font-size: 12px;">Supports: Chrome, Brave, Edge, and Opera.</p>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'home')">DOWNLOAD</button>
+        <button class="tab-btn" onclick="openTab(event, 'guide')">GUIDES</button>
+        <button class="tab-btn" onclick="openTab(event, 'credits')">CREDITS</button>
     </div>
-    <div class="features">
-        <div class="f-card">
-            <h3>☁️ Cloud Hub</h3>
-            <p>Fetch payloads instantly from the NotVen0x cloud. No need to reload the extension for new scripts.</p>
-        </div>
-        <div class="f-card">
-            <h3>⚡ 10ms Injection</h3>
-            <p>Utilizing high-speed V8 engine injection to ensure your cheats load before the game anti-cheat wakes up.</p>
-        </div>
-        <div class="f-card">
-            <h3>🍪 Game Specifics</h3>
-            <p>Built-in support for Cookie Clicker, IO games, and more. Optimized for the Orteil game engine.</p>
+
+    <div id="home" class="tab-content active">
+        <div class="card" style="text-align: center;">
+            <h2>Get Matcha Web</h2>
+            <p>Download the official extension package below.</p>
+            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="btn-dl">DOWNLOAD V3.1 (.ZIP)</a>
+            <p style="font-size: 12px;">Maintained by <b>Ven0x</b>. Updated for 2026.</p>
         </div>
     </div>
-    <div class="guide">
-        <h2>How to Install</h2>
-        <div class="step">
-            <div class="step-num">1</div>
-            <p>Download the ZIP file and extract the folder to your desktop.</p>
-        </div>
-        <div class="step">
-            <div class="step-num">2</div>
-            <p>Open <code>chrome://extensions</code> in your browser.</p>
-        </div>
-        <div class="step">
-            <div class="step-num">3</div>
-            <p>Enable <b>Developer Mode</b> in the top right corner.</p>
-        </div>
-        <div class="step">
-            <div class="step-num">4</div>
-            <p>Click <b>Load Unpacked</b> and select the extracted MatchaWeb folder.</p>
+
+    <div id="guide" class="tab-content">
+        <div class="card">
+            <div class="guide-box">
+                <h3>💻 PC Installation (Chrome/Brave/Edge)</h3>
+                <div class="step"><div class="step-n">1</div> Download and extract the .zip folder.</div>
+                <div class="step"><div class="step-n">2</div> Go to <code>chrome://extensions</code> in your browser.</div>
+                <div class="step"><div class="step-n">3</div> Turn on "Developer Mode" (Top Right).</div>
+                <div class="step"><div class="step-n">4</div> Click "Load Unpacked" and select the folder.</div>
+            </div>
+            
+            <div class="guide-box" style="background: #3e4f22; margin-top: 20px;">
+                <h3>📱 Mobile Installation (Android Only)</h3>
+                <div class="step"><div class="step-n">1</div> Install <b>Kiwi Browser</b> from the Play Store.</div>
+                <div class="step"><div class="step-n">2</div> Download the Matcha .zip to your phone.</div>
+                <div class="step"><div class="step-n">3</div> In Kiwi, tap the 3 dots > Extensions.</div>
+                <div class="step"><div class="step-n">4</div> Enable Developer Mode.</div>
+                <div class="step"><div class="step-n">5</div> Tap "+ (from .zip)" and select the Matcha file.</div>
+            </div>
         </div>
     </div>
+
+    <div id="credits" class="tab-content">
+        <div class="card">
+            <h2>The Team</h2>
+            <br>
+            <ul class="credits-list">
+                <li><span>Owner / Lead Developer</span> <strong>Ven0x</strong></li>
+                <li><span>UI Design</span> <strong>Matcha Brand</strong></li>
+                <li><span>Scripts Source</span> <strong>Ven0x Gist Hub</strong></li>
+                <li><span>License</span> <strong>GNU GPL v3</strong></li>
+            </ul>
+            <br>
+            <p style="text-align: center; font-size: 14px;">
+                Follow the project on <a href="https://github.com/NotVen0x" class="social-btn">GitHub</a> 
+                or join the <a href="#" class="social-btn">Discord</a>.
+            </p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2026 NotVen0x. This project is open-source under the GPL v3 License.</p>
+        &copy; 2026 Ven0x. Matcha Web is a visual modding project.
     </footer>
 </div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
 </body>
 </html>

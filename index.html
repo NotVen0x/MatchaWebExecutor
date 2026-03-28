@@ -1,209 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matcha Hub | Elite Portal</title>
-    <style>
-        :root {
-            --matcha-dark: #556b2f;
-            --matcha-accent: #adc178;
-            --matcha-cream: #fefae0;
-            --ios-color: #007aff;
-            --android-color: #3ddc84;
-            --pc-color: #556b2f;
-            --status-green: #2ecc71;
-            --status-red: #e74c3c;
-            --status-yellow: #f1c40f;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matcha Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1a1f0e;
+      --matcha: #556b2f;
+      --matcha-mid: #7a9442;
+      --matcha-light: #adc178;
+      --cream: #fefae0;
+      --cream-dark: #f0ecc8;
+      --green-glow: rgba(85,107,47,0.18);
+      --working: #5cb85c;
+      --untested: #e6a817;
+      --broken: #c0392b;
+    }
 
-        body {
-            background: var(--matcha-cream);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 20px; color: #283618;
-            display: flex; justify-content: center; min-height: 100vh;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .portal-container { width: 100%; max-width: 600px; text-align: center; }
+    body {
+      background: var(--dark);
+      font-family: 'Syne', sans-serif;
+      color: var(--cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        header h1 { font-size: 3rem; color: var(--matcha-dark); margin: 0; letter-spacing: -2px; }
-        .sub-head { opacity: 0.6; font-weight: 800; font-size: 12px; margin-bottom: 30px; }
+    /* background grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
 
-        /* --- NAVIGATION --- */
-        .main-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .nav-btn { 
-            padding: 12px 20px; border: none; border-radius: 12px; background: white; 
-            font-weight: 900; color: var(--matcha-dark); cursor: pointer; transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .nav-btn.active { background: var(--matcha-dark); color: white; }
+    /* glowing orb bg */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(85,107,47,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        /* --- CARDS & SCREENS --- */
-        .card { 
-            background: white; border-radius: 30px; padding: 30px; 
-            box-shadow: 0 20px 50px rgba(85, 107, 47, 0.1); border: 2px solid var(--matcha-accent);
-            min-height: 400px; position: relative; overflow: hidden;
-        }
-        .screen { display: none; animation: slideUp 0.4s ease-out; }
-        .screen.active { display: block; }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
 
-        /* --- DEVICE BUTTONS --- */
-        .device-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
-        .device-card {
-            background: #fafcf6; border: 2px solid #eee; padding: 20px; border-radius: 20px;
-            cursor: pointer; transition: 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between;
-        }
-        .device-card:hover { border-color: var(--matcha-accent); transform: scale(1.02); }
-        
-        .device-info h3 { margin: 0; font-size: 18px; }
-        .status-badge { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 900; margin-top: 5px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; }
-        .dot.green { background: var(--status-green); box-shadow: 0 0 8px var(--status-green); }
-        .dot.red { background: var(--status-red); box-shadow: 0 0 8px var(--status-red); }
-        .dot.yellow { background: var(--status-yellow); box-shadow: 0 0 8px var(--status-yellow); }
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: var(--matcha);
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-size: 28px;
+      box-shadow: 0 0 40px var(--green-glow);
+      animation: pulse 3s ease-in-out infinite;
+    }
 
-        /* --- DOWNLOAD BUTTONS --- */
-        .dl-main-btn {
-            display: block; width: 100%; padding: 20px; border-radius: 15px; border: none;
-            color: white; font-weight: 900; font-size: 16px; cursor: pointer; margin-top: 20px;
-            text-decoration: none; text-align: center;
-        }
-        .back-btn { background: none; border: none; color: var(--matcha-dark); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px var(--green-glow); }
+      50% { box-shadow: 0 0 60px rgba(85,107,47,0.35); }
+    }
 
-        /* --- GUIDE STYLING --- */
-        .guide-content { text-align: left; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-top: 20px; border-left: 5px solid var(--matcha-dark); }
-        .guide-content ol { padding-left: 20px; font-size: 14px; line-height: 1.6; }
+    header h1 {
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -4px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--cream) 30%, var(--matcha-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        footer { margin-top: 40px; opacity: 0.4; font-size: 10px; font-weight: 800; }
-    </style>
+    .tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--matcha-light);
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .nav-btn {
+      padding: 10px 22px;
+      border: 1px solid rgba(173,193,120,0.2);
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      color: rgba(254,250,224,0.5);
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--matcha-light);
+      color: var(--cream);
+    }
+
+    .nav-btn.active {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--cream);
+      box-shadow: 0 0 20px var(--green-glow);
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: rgba(254,250,224,0.04);
+      border: 1px solid rgba(173,193,120,0.15);
+      border-radius: 28px;
+      padding: 36px;
+      backdrop-filter: blur(10px);
+      min-height: 380px;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; }
+    .screen.active {
+      display: block;
+      animation: fadeUp 0.35s ease-out both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HOME ── */
+    .home-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--matcha-light);
+      margin-bottom: 12px;
+    }
+
+    .home-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(254,250,224,0.7);
+      margin-bottom: 28px;
+    }
+
+    .news-box {
+      background: rgba(85,107,47,0.12);
+      border: 1px solid rgba(173,193,120,0.2);
+      border-radius: 16px;
+      padding: 20px 24px;
+    }
+
+    .news-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--matcha-light);
+      margin-bottom: 8px;
+    }
+
+    .news-text {
+      font-size: 13px;
+      color: rgba(254,250,224,0.75);
+      line-height: 1.6;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(173,193,120,0.12);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--matcha-light);
+    }
+
+    .stat-lbl {
+      font-size: 9px;
+      letter-spacing: 1px;
+      color: rgba(254,250,224,0.4);
+      margin-top: 4px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── DOWNLOAD ── */
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: rgba(254,250,224,0.45);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 24px;
+    }
+
+    .device-grid { display: flex; flex-direction: column; gap: 12px; }
+
+    .device-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(173,193,120,0.15);
+      border-radius: 18px;
+      padding: 18px 22px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .device-card:hover {
+      background: rgba(85,107,47,0.1);
+      border-color: var(--matcha-light);
+      transform: translateX(4px);
+    }
+
+    .device-name {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.green  { background: var(--working);  box-shadow: 0 0 8px var(--working); }
+    .dot.yellow { background: var(--untested); box-shadow: 0 0 8px var(--untested); }
+    .dot.red    { background: var(--broken);   box-shadow: 0 0 8px var(--broken); }
+
+    .arrow {
+      font-size: 18px;
+      color: var(--matcha-light);
+      opacity: 0.5;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .device-card:hover .arrow { opacity: 1; transform: translateX(4px); }
+
+    /* all releases link */
+    .all-releases {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 14px;
+      border: 1px dashed rgba(173,193,120,0.25);
+      border-radius: 14px;
+      color: rgba(254,250,224,0.45);
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .all-releases:hover {
+      border-color: var(--matcha-light);
+      color: var(--matcha-light);
+      background: rgba(85,107,47,0.08);
+    }
+
+    /* ── DEVICE MENU ── */
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--matcha-light);
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 22px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      letter-spacing: 1px;
+    }
+
+    .back-btn:hover { opacity: 1; }
+
+    .dl-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      border-radius: 16px;
+      border: none;
+      color: var(--cream);
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 20px;
+      text-decoration: none;
+      text-align: center;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .dl-btn:hover { filter: brightness(1.15); transform: translateY(-2px); }
+    .dl-btn:active { transform: scale(0.98); }
+
+    .guide-box {
+      margin-top: 20px;
+      background: rgba(0,0,0,0.2);
+      border-left: 3px solid var(--matcha);
+      border-radius: 0 14px 14px 0;
+      padding: 18px 20px;
+    }
+
+    .guide-box h4 {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--matcha-light);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 12px;
+    }
+
+    .guide-box ol {
+      padding-left: 18px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: rgba(254,250,224,0.7);
+    }
+
+    .guide-box ol li { margin-bottom: 4px; }
+
+    /* ── CREDITS ── */
+    .credits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .credit-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(173,193,120,0.12);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .credit-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--matcha-light);
+      margin-bottom: 6px;
+    }
+
+    .credit-name {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .quote {
+      margin-top: 32px;
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(85,107,47,0.08);
+      font-size: 13px;
+      color: rgba(254,250,224,0.5);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: rgba(254,250,224,0.2);
+    }
+  </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="portal-container">
-    <header>
-        <h1>MATCHA</h1>
-        <div class="sub-head">PREMIUM WEB EXECUTOR PORTAL</div>
-    </header>
+  <header>
+    <div class="logo-mark">🍵</div>
+    <h1>MATCHA</h1>
+    <div class="tagline">PREMIUM WEB EXECUTOR PORTAL</div>
+  </header>
 
-    <nav class="main-nav" id="main-nav">
-        <button class="nav-btn active" onclick="showScreen('home')">MAIN</button>
-        <button class="nav-btn" onclick="showScreen('download')">DOWNLOAD</button>
-        <button class="nav-btn" onclick="showScreen('credits')">CREDITS</button>
-    </nav>
+  <nav>
+    <button class="nav-btn active" onclick="show('home', this)">MAIN</button>
+    <button class="nav-btn" onclick="show('download', this)">DOWNLOAD</button>
+    <button class="nav-btn" onclick="show('credits', this)">CREDITS</button>
+  </nav>
 
-    <div class="card">
-        <div id="home" class="screen active">
-            <h2 style="color:var(--matcha-dark)">Welcome, Architect</h2>
-            <p>Matcha is the world's first cross-platform web executor designed for performance and bypass safety.</p>
-            <div style="margin-top:40px; padding:20px; background:#f0f4e8; border-radius:20px;">
-                <p style="font-size:13px; font-weight:bold;">LATEST NEWS:</p>
-                <p style="font-size:12px;">Vercel Hub is live. iOS Sandbox research in progress. Android support confirmed via Kiwi.</p>
-            </div>
+  <div class="card">
+
+    <!-- HOME -->
+    <div id="home" class="screen active">
+      <div class="home-title">Welcome, Architect.</div>
+      <div class="home-body">Matcha is a cross-platform web executor built for speed and precision. Inject into any browser game with a single click — no setup, no bloat.</div>
+      <div class="news-box">
+        <div class="news-label">// LATEST NEWS</div>
+        <div class="news-text">v6.0 Ultra Edition is live. MAIN world injection, expanded script hub, and full UI rebuild. iOS sandbox research ongoing. Android confirmed via Kiwi Browser.</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">v6.0</div>
+          <div class="stat-lbl">CURRENT</div>
         </div>
-
-        <div id="download" class="screen">
-            <h2 style="margin-bottom:5px;">Select Device</h2>
-            <p style="font-size:12px; opacity:0.6;">Choose your platform for specialized files.</p>
-            
-            <div class="device-grid">
-                <div class="device-card" onclick="showDeviceMenu('pc')">
-                    <div class="device-info">
-                        <h3>Windows / MacOS</h3>
-                        <div class="status-badge" style="color:var(--status-green)"><div class="dot green"></div> WORKING</div>
-                    </div>
-                    <span>➔</span>
-                </div>
-                <div class="device-card" onclick="showDeviceMenu('android')">
-                    <div class="device-info">
-                        <h3>Android</h3>
-                        <div class="status-badge" style="color:var(--status-yellow)"><div class="dot yellow"></div> NOT TESTED</div>
-                    </div>
-                    <span>➔</span>
-                </div>
-                <div class="device-card" onclick="showDeviceMenu('ios')">
-                    <div class="device-info">
-                        <h3>iPhone / iPad</h3>
-                        <div class="status-badge" style="color:var(--status-red)"><div class="dot red"></div> NOT WORKING</div>
-                    </div>
-                    <span>➔</span>
-                </div>
-            </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-lbl">SCRIPTS</div>
         </div>
-
-        <div id="device-menu" class="screen">
-            <button class="back-btn" onclick="showScreen('download')">← Back to Platforms</button>
-            <h2 id="device-title">Platform</h2>
-            
-            <a id="dl-link" href="#" class="dl-main-btn">DOWNLOAD EXECUTOR</a>
-
-            <div class="guide-content">
-                <h4 style="margin:0 0 10px 0;">INSTALLATION GUIDE:</h4>
-                <div id="device-guide"></div>
-            </div>
+        <div class="stat-box">
+          <div class="stat-num">MV3</div>
+          <div class="stat-lbl">MANIFEST</div>
         </div>
-
-        <div id="credits" class="screen">
-            <h2 style="color:var(--matcha-dark)">The Team</h2>
-            <p>Project Lead: <b>Ven0x</b></p>
-            <p>Cloud Distribution: <b>Vercel Edge</b></p>
-            <p style="font-size:12px; margin-top:50px;">"Building the future of web-based injection."</p>
-        </div>
+      </div>
     </div>
 
-    <footer>&copy; 2026 MATCHA HUB &bull; VEN0X DEVELOPMENT</footer>
+    <!-- DOWNLOAD -->
+    <div id="download" class="screen">
+      <div class="section-title">Select Platform</div>
+      <div class="section-sub">// CHOOSE YOUR DEVICE FOR THE RIGHT BUILD</div>
+      <div class="device-grid">
+        <div class="device-card" onclick="showDevice('pc')">
+          <div>
+            <div class="device-name">Windows / MacOS</div>
+            <div class="status-pill" style="color:var(--working)"><div class="dot green"></div> WORKING</div>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="device-card" onclick="showDevice('android')">
+          <div>
+            <div class="device-name">Android</div>
+            <div class="status-pill" style="color:var(--untested)"><div class="dot yellow"></div> NOT TESTED</div>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="device-card" onclick="showDevice('ios')">
+          <div>
+            <div class="device-name">iPhone / iPad</div>
+            <div class="status-pill" style="color:var(--broken)"><div class="dot red"></div> NOT WORKING</div>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+      <a class="all-releases" href="https://github.com/NotVen0x/MatchaWebExecutor/releases" target="_blank">
+        🗂 View all releases &amp; older versions →
+      </a>
+    </div>
+
+    <!-- DEVICE MENU -->
+    <div id="device-menu" class="screen">
+      <button class="back-btn" onclick="show('download', null)">← BACK TO PLATFORMS</button>
+      <div id="d-title" class="section-title"></div>
+      <a id="d-link" class="dl-btn" href="#" target="_blank">DOWNLOAD</a>
+      <div class="guide-box">
+        <h4>// INSTALL GUIDE</h4>
+        <div id="d-guide"></div>
+      </div>
+    </div>
+
+    <!-- CREDITS -->
+    <div id="credits" class="screen">
+      <div class="section-title">The Team</div>
+      <div class="section-sub">// PEOPLE BEHIND THE BREW</div>
+      <div class="credits-grid">
+        <div class="credit-card">
+          <div class="credit-role">PROJECT LEAD</div>
+          <div class="credit-name">Ven0x</div>
+        </div>
+        <div class="credit-card">
+          <div class="credit-role">DISTRIBUTION</div>
+          <div class="credit-name">Vercel Edge</div>
+        </div>
+        <div class="credit-card">
+          <div class="credit-role">LICENSE</div>
+          <div class="credit-name">GNU GPL v3</div>
+        </div>
+        <div class="credit-card">
+          <div class="credit-role">PLATFORM</div>
+          <div class="credit-name">Chrome MV3</div>
+        </div>
+      </div>
+      <div class="quote">"Building the future of web-based injection, one brew at a time."</div>
+    </div>
+
+  </div>
+
+  <footer>&copy; 2026 MATCHA HUB &bull; VEN0X DEVELOPMENT</footer>
 </div>
 
 <script>
-    const deviceData = {
-        pc: {
-            title: "PC / Desktop",
-            color: "#556b2f",
-            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip",
-            guide: "<ol><li>Download the .zip file.</li><li>Extract to a folder.</li><li>Load as Unpacked Extension in Chrome/Edge.</li><li>Visit any game site and hit Right-Shift.</li></ol>"
-        },
-        android: {
-            title: "Android Mobile",
-            color: "#3ddc84",
-            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip",
-            guide: "<ol><li>Install <b>Kiwi Browser</b> from Play Store.</li><li>Download the .zip file.</li><li>In Kiwi, go to 'Extensions' and enable 'Developer Mode'.</li><li>Click 'Load .zip' and select the file.</li></ol>"
-        },
-        ios: {
-            title: "iOS (Apple)",
-            color: "#007aff",
-            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js",
-            guide: "<ol><li>Install <b>Userscripts</b> or <b>Tampermonkey</b> from App Store.</li><li>Enable the extension in Safari Settings.</li><li>Click the download button above to install the .js file.</li><li>Note: Currently in maintenance mode.</li></ol>"
-        }
-    };
-
-    function showScreen(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        
-        // Update Nav Buttons
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        if(id === 'home' || id === 'download' || id === 'credits') {
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                if(b.innerText.toLowerCase() === id) b.classList.add('active');
-            });
-        }
+  const devices = {
+    pc: {
+      title: 'Windows / MacOS',
+      color: '#556b2f',
+      link: 'https://github.com/NotVen0x/MatchaWebExecutor/releases/download/MatchaSecond/MatchaWebExecutor.zip',
+      guide: '<ol><li>Download the .zip file.</li><li>Extract the folder to your desktop.</li><li>Open Chrome and go to <b>chrome://extensions</b>.</li><li>Enable <b>Developer Mode</b> (top right toggle).</li><li>Click <b>Load Unpacked</b> and select the extracted folder.</li><li>Open any game site and start brewing.</li></ol>'
+    },
+    android: {
+      title: 'Android',
+      color: '#3ddc84',
+      link: 'https://github.com/NotVen0x/MatchaWebExecutor/releases/download/MatchaSecond/MatchaWebExecutor.zip',
+      guide: '<ol><li>Install <b>Kiwi Browser</b> from the Play Store.</li><li>Download the .zip file.</li><li>In Kiwi, go to Extensions and enable <b>Developer Mode</b>.</li><li>Click <b>Load .zip</b> and select the downloaded file.</li><li>Open a game site and inject.</li></ol>'
+    },
+    ios: {
+      title: 'iPhone / iPad',
+      color: '#007aff',
+      link: 'https://github.com/NotVen0x/MatchaWebExecutor/releases/download/MatchaSecond/MatchaWebExecutor.zip',
+      guide: '<ol><li>iOS support is currently not working.</li><li>Sandbox research is in progress.</li><li>Check back on a future release for iOS support.</li></ol>'
     }
+  };
 
-    function showDeviceMenu(device) {
-        const data = deviceData[device];
-        document.getElementById('device-title').innerText = data.title;
-        document.getElementById('device-title').style.color = data.color;
-        
-        const dlBtn = document.getElementById('dl-link');
-        dlBtn.href = data.link;
-        dlBtn.style.backgroundColor = data.color;
-        
-        document.getElementById('device-guide').innerHTML = data.guide;
-        
-        showScreen('device-menu');
+  let activeNav = document.querySelector('.nav-btn.active');
+
+  function show(id, btn) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (btn) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeNav = btn;
     }
+  }
+
+  function showDevice(key) {
+    const d = devices[key];
+    document.getElementById('d-title').textContent = d.title;
+    document.getElementById('d-link').href = d.link;
+    document.getElementById('d-link').style.background = d.color;
+    document.getElementById('d-guide').innerHTML = d.guide;
+    show('device-menu', null);
+  }
 </script>
-
 </body>
 </html>

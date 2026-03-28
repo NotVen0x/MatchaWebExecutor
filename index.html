@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matcha Web | Ven0x</title>
+    <title>Matcha Hub | Ven0x</title>
     <style>
         :root {
             --matcha-dark: #556b2f;
@@ -11,6 +11,7 @@
             --matcha-cream: #fefae0;
             --matcha-soft: #e9f5db;
             --matcha-accent: #adc178;
+            --ios-blue: #007aff;
             --glass: rgba(255, 255, 255, 0.85);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,10 +45,7 @@
             font-weight: 800;
             transition: 0.3s;
         }
-        .tab-btn.active {
-            background: var(--matcha-dark);
-            color: white;
-        }
+        .tab-btn.active { background: var(--matcha-dark); color: white; }
 
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
@@ -62,6 +60,15 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
+        .guide-box { background: #283618; color: white; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 5px solid var(--matcha-accent); }
+        .guide-box h3 { color: var(--matcha-accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .step { margin-bottom: 10px; display: flex; gap: 10px; font-size: 14px; line-height: 1.5; }
+        .step-n { background: var(--matcha-accent); color: #283618; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 12px; }
+
+        .ios { background: #1c1c1e; border-left-color: var(--ios-blue); }
+        .ios h3 { color: var(--ios-blue); }
+        .ios .step-n { background: var(--ios-blue); color: white; }
+
         .btn-dl {
             display: inline-block;
             background: var(--matcha-dark);
@@ -73,17 +80,8 @@
             margin: 20px 0;
             transition: 0.3s;
         }
-        .btn-dl:hover { transform: scale(1.05); background: #3e4f22; }
+        .btn-dl:hover { transform: scale(1.05); }
 
-        .guide-box { background: #283618; color: white; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: left; }
-        .guide-box h3 { color: var(--matcha-accent); margin-bottom: 15px; }
-        .step { margin-bottom: 10px; display: flex; gap: 10px; font-size: 14px; }
-        .step-n { background: var(--matcha-accent); color: #283618; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-
-        .credits-list { list-style: none; text-align: left; }
-        .credits-list li { padding: 10px; border-bottom: 1px solid var(--matcha-accent); display: flex; justify-content: space-between; }
-        .social-btn { color: var(--matcha-dark); text-decoration: none; font-weight: bold; border-bottom: 1px dashed var(--matcha-dark); }
-        
         footer { text-align: center; margin-top: 40px; font-size: 12px; opacity: 0.7; }
     </style>
 </head>
@@ -91,67 +89,74 @@
 
 <div class="container">
     <header>
-        <span class="badge">v3.1 Build</span>
+        <span class="badge">v3.2 Build</span>
         <h1>MATCHA HUB</h1>
-        <p>The Central Hub for Ven0x's Web Modding Suite.</p>
+        <p>Official Multi-Platform Web Modding Suite by <b>Ven0x</b></p>
     </header>
 
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="openTab(event, 'home')">DOWNLOAD</button>
-        <button class="tab-btn" onclick="openTab(event, 'guide')">GUIDES</button>
+        <button class="tab-btn" onclick="openTab(event, 'guide')">INSTALL GUIDES</button>
         <button class="tab-btn" onclick="openTab(event, 'credits')">CREDITS</button>
     </div>
 
     <div id="home" class="tab-content active">
         <div class="card" style="text-align: center;">
             <h2>Get Matcha Web</h2>
-            <p>Download the official extension package below.</p>
-            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="btn-dl">DOWNLOAD V3.1 (.ZIP)</a>
-            <p style="font-size: 12px;">Maintained by <b>Ven0x</b>. Updated for 2026.</p>
+            <p>Download the latest version of the extension package.</p>
+            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="btn-dl">DOWNLOAD V3.2 (.ZIP)</a>
+            <p style="font-size: 12px; margin-top: 10px;">Universal support for PC, Android, and iOS (Safari).</p>
         </div>
     </div>
 
     <div id="guide" class="tab-content">
         <div class="card">
             <div class="guide-box">
-                <h3>💻 PC Installation (Chrome/Brave/Edge)</h3>
-                <div class="step"><div class="step-n">1</div> Download and extract the .zip folder.</div>
-                <div class="step"><div class="step-n">2</div> Go to <code>chrome://extensions</code> in your browser.</div>
-                <div class="step"><div class="step-n">3</div> Turn on "Developer Mode" (Top Right).</div>
-                <div class="step"><div class="step-n">4</div> Click "Load Unpacked" and select the folder.</div>
+                <h3>💻 PC (Chrome / Brave / Edge)</h3>
+                <div class="step"><div class="step-n">1</div> Download and extract the Matcha .zip folder.</div>
+                <div class="step"><div class="step-n">2</div> Open <code>chrome://extensions</code> in your browser.</div>
+                <div class="step"><div class="step-n">3</div> Enable <b>Developer Mode</b> in the top right corner.</div>
+                <div class="step"><div class="step-n">4</div> Click <b>Load Unpacked</b> and select the extracted folder.</div>
             </div>
             
-            <div class="guide-box" style="background: #3e4f22; margin-top: 20px;">
-                <h3>📱 Mobile Installation (Android Only)</h3>
-                <div class="step"><div class="step-n">1</div> Install <b>Kiwi Browser</b> from the Play Store.</div>
-                <div class="step"><div class="step-n">2</div> Download the Matcha .zip to your phone.</div>
-                <div class="step"><div class="step-n">3</div> In Kiwi, tap the 3 dots > Extensions.</div>
-                <div class="step"><div class="step-n">4</div> Enable Developer Mode.</div>
-                <div class="step"><div class="step-n">5</div> Tap "+ (from .zip)" and select the Matcha file.</div>
+            <div class="guide-box" style="background: #3e4f22;">
+                <h3>📱 Android (Kiwi Browser)</h3>
+                <div class="step"><div class="step-n">1</div> Install <b>Kiwi Browser</b> from the Google Play Store.</div>
+                <div class="step"><div class="step-n">2</div> Download the Matcha .zip to your device.</div>
+                <div class="step"><div class="step-n">3</div> Open Extensions in Kiwi and enable Developer Mode.</div>
+                <div class="step"><div class="step-n">4</div> Tap <b>+ (from .zip)</b> and select the Matcha file.</div>
+            </div>
+
+            <div class="guide-box ios">
+                <h3>🍎 iOS (iPhone / iPad)</h3>
+                <div class="step"><div class="step-n">1</div> Install the <b>"Userscripts"</b> extension from the App Store.</div>
+                <div class="step"><div class="step-n">2</div> Enable the extension in <b>Settings > Safari > Extensions</b>.</div>
+                <div class="step"><div class="step-n">3</div> Create a folder in your Files app and set it as the Userscripts directory.</div>
+                <div class="step"><div class="step-n">4</div> Save our <code>Matcha.user.js</code> file into that folder.</div>
             </div>
         </div>
     </div>
 
     <div id="credits" class="tab-content">
         <div class="card">
-            <h2>The Team</h2>
+            <h2>Development Credits</h2>
             <br>
-            <ul class="credits-list">
-                <li><span>Owner / Lead Developer</span> <strong>Ven0x</strong></li>
-                <li><span>UI Design</span> <strong>Matcha Brand</strong></li>
-                <li><span>Scripts Source</span> <strong>Ven0x Gist Hub</strong></li>
-                <li><span>License</span> <strong>GNU GPL v3</strong></li>
-            </ul>
+            <p style="margin-bottom: 20px;">Matcha Web is a passion project focused on visual site modification and automation testing.</p>
+            <div class="guide-box" style="background: transparent; color: #283618; border-color: var(--matcha-dark);">
+                <div class="step"><strong>Lead Architect:</strong> Ven0x</div>
+                <div class="step"><strong>UI Branding:</strong> Matcha Design</div>
+                <div class="step"><strong>Script Engine:</strong> Ven0x Gist Cloud</div>
+            </div>
             <br>
-            <p style="text-align: center; font-size: 14px;">
-                Follow the project on <a href="https://github.com/NotVen0x" class="social-btn">GitHub</a> 
-                or join the <a href="#" class="social-btn">Discord</a>.
+            <p style="text-align: center;">
+                <a href="https://github.com/NotVen0x" style="color: var(--matcha-dark); font-weight: bold; text-decoration: none;">GitHub</a> | 
+                <a href="#" style="color: var(--matcha-dark); font-weight: bold; text-decoration: none;">Discord (Coming Soon)</a>
             </p>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 Ven0x. Matcha Web is a visual modding project.
+        &copy; 2026 Ven0x &bull; Matcha Hub Project
     </footer>
 </div>
 

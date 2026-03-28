@@ -14,123 +14,129 @@
         body {
             background: var(--matcha-cream);
             font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0; padding: 20px; color: #283618;
+            margin: 0; padding: 15px; color: #283618;
             display: flex; justify-content: center;
         }
         .hub-container { width: 100%; max-width: 800px; text-align: center; }
         
-        header { margin-bottom: 30px; }
-        h1 { font-size: 3rem; color: var(--matcha-dark); margin: 10px 0; }
-        .version-tag { background: var(--matcha-dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        header { margin-bottom: 25px; }
+        h1 { font-size: 2.8rem; color: var(--matcha-dark); margin: 10px 0; letter-spacing: -2px; }
+        .version-tag { background: var(--matcha-dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
         /* Navigation */
-        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .t-btn { 
-            padding: 12px 24px; border: 2px solid var(--matcha-dark); border-radius: 12px;
-            cursor: pointer; background: white; font-weight: bold; transition: 0.2s;
+            padding: 10px 18px; border: 2px solid var(--matcha-dark); border-radius: 12px;
+            cursor: pointer; background: white; font-weight: bold; transition: 0.2s; font-size: 12px;
         }
         .t-btn.active { background: var(--matcha-dark); color: white; }
 
         /* Content Areas */
         .card { 
-            background: white; border: 2px solid var(--matcha-accent); border-radius: 20px;
-            padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); min-height: 350px;
+            background: white; border: 2px solid var(--matcha-accent); border-radius: 24px;
+            padding: 25px; box-shadow: 0 10px 30px rgba(85, 107, 47, 0.1); min-height: 380px;
         }
-        .content-section { display: none; text-align: left; animation: fadeIn 0.3s ease; }
+        .content-section { display: none; animation: fadeIn 0.3s ease-in-out; }
         .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* THE FIX: Flex centering for the download buttons */
+        .dl-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Buttons */
         .dl-btn { 
-            display: block; width: 100%; max-width: 350px; margin: 15px auto;
+            display: block; width: 90%; max-width: 350px; margin: 10px 0;
             background: var(--matcha-dark); color: white; padding: 18px;
-            text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 14px;
-            transition: transform 0.2s;
+            text-decoration: none; border-radius: 14px; font-weight: 900; font-size: 14px;
+            box-shadow: 0 4px 0 #3e4f22; transition: all 0.1s;
         }
-        .dl-btn:hover { transform: scale(1.02); }
-        .dl-ios { background: var(--ios-blue); }
+        .dl-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3e4f22; }
+        .dl-ios { background: var(--ios-blue); box-shadow: 0 4px 0 #0056b3; }
+        .dl-ios:active { box-shadow: 0 1px 0 #0056b3; }
 
         /* Guide Boxes */
         .guide-box { 
-            background: #f8f9fa; border-left: 5px solid var(--matcha-dark);
-            padding: 15px; border-radius: 8px; margin-bottom: 15px; 
+            background: #fcfdfa; border: 1px solid #eee; border-left: 6px solid var(--matcha-dark);
+            padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: left;
         }
-        .ios-box { border-left-color: var(--ios-blue); background: #f0f7ff; }
+        .ios-box { border-left-color: var(--ios-blue); background: #f7fbff; }
 
-        footer { margin-top: 30px; font-size: 12px; opacity: 0.6; }
+        footer { margin-top: 40px; font-size: 11px; opacity: 0.5; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="hub-container">
     <header>
-        <span class="version-tag">V3.4 STABLE</span>
+        <span class="version-tag">STABLE BUILD 3.6</span>
         <h1>MATCHA HUB</h1>
         <p>Lead Architect: <b>Ven0x</b></p>
     </header>
 
     <div class="tabs">
-        <div class="t-btn active" onclick="tab(event, 'home')">DOWNLOAD</div>
-        <div class="t-btn" onclick="tab(event, 'guide')">GUIDES</div>
-        <div class="t-btn" onclick="tab(event, 'credits')">CREDITS</div>
+        <div class="t-btn active" onclick="tab(this, 'home')">DOWNLOAD</div>
+        <div class="t-btn" onclick="tab(this, 'guide')">INSTALLATION</div>
+        <div class="t-btn" onclick="tab(this, 'credits')">CREDITS</div>
     </div>
 
     <div class="card">
-        <div id="home" class="content-section active" style="text-align: center;">
-            <h2 style="color:var(--matcha-dark)">Software Releases</h2>
-            <p>Official Ven0x Modding Suite for 2026.</p>
+        <div id="home" class="content-section active">
+            <h2 style="color:var(--matcha-dark); margin-bottom: 5px;">Releases</h2>
+            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 20px;">Unified modding engine for all devices.</p>
             
-            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+            <div class="dl-area">
+                <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
+                
+                <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
+            </div>
             
-            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
-            
-            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
-            
-            <p style="font-size: 11px; margin-top: 10px; color: var(--ios-blue); font-weight: bold;">
-                TIP: iOS users must have the "Userscripts" app installed from the App Store.
+            <p style="font-size: 11px; color: var(--ios-blue); font-weight: bold; background: #f0f7ff; display: inline-block; padding: 5px 15px; border-radius: 50px; margin-top: 20px;">
+                iOS requires the "Userscripts" Safari extension.
             </p>
         </div>
 
         <div id="guide" class="content-section">
             <div class="guide-box">
-                <h3 style="margin-top:0">💻 PC (Chrome/Brave)</h3>
-                <p>1. Extract the .zip.<br>2. Go to <code>chrome://extensions</code>.<br>3. Enable <b>Developer Mode</b>.<br>4. Load Unpacked.</p>
-            </div>
-            <div class="guide-box">
-                <h3 style="margin-top:0">📱 Android (Kiwi)</h3>
-                <p>1. Open Kiwi Browser.<br>2. Tap 3-dots > Extensions.<br>3. Enable Developer Mode.<br>4. Tap <b>+ (from .zip)</b>.</p>
+                <h3 style="margin-top:0">💻 Windows / Mac</h3>
+                <p style="font-size: 14px; line-height: 1.6;">1. Download & Extract .zip<br>2. Visit <code>chrome://extensions</code><br>3. Toggle <b>Developer Mode</b> (On)<br>4. Click "Load Unpacked" & select folder.</p>
             </div>
             <div class="guide-box ios-box">
                 <h3 style="margin-top:0; color:var(--ios-blue);">🍎 iOS (Safari)</h3>
-                <p>1. Download "Userscripts" from App Store.<br>2. Enable in Safari Settings.<br>3. Save the <code>Matcha.user.js</code> file into your Safari Userscripts folder.</p>
+                <p style="font-size: 14px; line-height: 1.6;">1. Download <b>Userscripts</b> from App Store<br>2. Enable in Safari Settings<br>3. Click the blue button on this site to install <code>Matcha.user.js</code>.</p>
             </div>
         </div>
 
-        <div id="credits" class="content-section">
-            <h2 style="color:var(--matcha-dark)">Project Credits</h2>
-            <p><b>Lead Architect:</b> Ven0x</p>
-            <p><b>GitHub:</b> NotVen0x</p>
-            <p><b>Suite:</b> Cookie Clicker, CPS Test, Roblox Visuals, Cursed Notepad.</p>
-            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-            <p style="font-size: 14px; text-align: center; font-weight: bold;">Discord Server Coming Soon...</p>
+        <div id="credits" class="content-section" style="text-align: center;">
+            <h2 style="color:var(--matcha-dark)">Project Intelligence</h2>
+            <p style="margin-bottom: 25px;">Developed by Ven0x.</p>
+            <div style="border-top: 1px solid #eee; padding-top: 15px; text-align: left; display: inline-block;">
+                <p><b>Lead Developer:</b> Ven0x</p>
+                <p><b>GitHub:</b> NotVen0x</p>
+                <p><b>Revision:</b> 2026</p>
+            </div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 Ven0x Project &bull; Built for the Modding Community
+        &copy; 2026 VEN0X &bull; MATCHA WEB EXECUTOR
     </footer>
 </div>
 
 <script>
-    function tab(evt, name) {
-        // Hide all sections
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        // Deactivate all buttons
-        document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
-        
-        // Show current section and button
+    function tab(btn, name) {
+        const sections = document.getElementsByClassName('content-section');
+        for (let s of sections) { s.classList.remove('active'); }
+        const buttons = document.getElementsByClassName('t-btn');
+        for (let b of buttons) { b.classList.remove('active'); }
         document.getElementById(name).classList.add('active');
-        evt.currentTarget.classList.add('active');
+        btn.classList.add('active');
     }
 </script>
 

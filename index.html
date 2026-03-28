@@ -10,6 +10,8 @@
             --matcha-accent: #adc178;
             --matcha-cream: #fefae0;
             --ios-blue: #007aff;
+            --status-green: #2ecc71;
+            --status-red: #e74c3c;
         }
         body {
             background: var(--matcha-cream);
@@ -39,7 +41,6 @@
         .content-section { display: none; animation: fadeIn 0.3s ease-in-out; }
         .content-section.active { display: block; }
         
-        /* THE FIX: Flex centering for the download buttons */
         .dl-area {
             display: flex;
             flex-direction: column;
@@ -50,9 +51,14 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Buttons */
+        /* Buttons & Status Indicators */
+        .dl-row { 
+            width: 100%; max-width: 400px; margin: 10px 0; 
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
         .dl-btn { 
-            display: block; width: 90%; max-width: 350px; margin: 10px 0;
+            display: block; width: 100%;
             background: var(--matcha-dark); color: white; padding: 18px;
             text-decoration: none; border-radius: 14px; font-weight: 900; font-size: 14px;
             box-shadow: 0 4px 0 #3e4f22; transition: all 0.1s;
@@ -60,6 +66,14 @@
         .dl-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3e4f22; }
         .dl-ios { background: var(--ios-blue); box-shadow: 0 4px 0 #0056b3; }
         .dl-ios:active { box-shadow: 0 1px 0 #0056b3; }
+
+        .status-container {
+            display: flex; align-items: center; gap: 8px; margin-top: 8px;
+            font-size: 11px; font-weight: 800; text-transform: uppercase;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.green { background: var(--status-green); box-shadow: 0 0 8px var(--status-green); }
+        .dot.red { background: var(--status-red); box-shadow: 0 0 8px var(--status-red); }
 
         /* Guide Boxes */
         .guide-box { 
@@ -75,7 +89,7 @@
 
 <div class="hub-container">
     <header>
-        <span class="version-tag">STABLE BUILD 3.6</span>
+        <span class="version-tag">STABLE BUILD 3.8</span>
         <h1>MATCHA HUB</h1>
         <p>Lead Architect: <b>Ven0x</b></p>
     </header>
@@ -89,37 +103,46 @@
     <div class="card">
         <div id="home" class="content-section active">
             <h2 style="color:var(--matcha-dark); margin-bottom: 5px;">Releases</h2>
-            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 20px;">Unified modding engine for all devices.</p>
+            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 20px;">Check the status of the executor below.</p>
             
             <div class="dl-area">
-                <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
+                <div class="dl-row">
+                    <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
+                    <div class="status-container" style="color: var(--status-green);">
+                        <div class="dot green"></div> Working
+                    </div>
+                </div>
                 
-                <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
+                <div class="dl-row">
+                    <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
+                    <div class="status-container" style="color: var(--status-red);">
+                        <div class="dot red"></div> Not Working
+                    </div>
+                </div>
             </div>
             
-            <p style="font-size: 11px; color: var(--ios-blue); font-weight: bold; background: #f0f7ff; display: inline-block; padding: 5px 15px; border-radius: 50px; margin-top: 20px;">
-                iOS requires the "Userscripts" Safari extension.
+            <p style="font-size: 11px; color: #666; font-weight: bold; background: #f5f5f5; display: inline-block; padding: 8px 15px; border-radius: 50px; margin-top: 25px;">
+                Update: iOS injection is currently blocked by Apple Security. 
             </p>
         </div>
 
         <div id="guide" class="content-section">
             <div class="guide-box">
-                <h3 style="margin-top:0">💻 Windows / Mac</h3>
-                <p style="font-size: 14px; line-height: 1.6;">1. Download & Extract .zip<br>2. Visit <code>chrome://extensions</code><br>3. Toggle <b>Developer Mode</b> (On)<br>4. Click "Load Unpacked" & select folder.</p>
+                <h3 style="margin-top:0">💻 Windows / Mac / Android</h3>
+                <p style="font-size: 14px; line-height: 1.6;">Use the .zip version for the full experience. PC and Kiwi Browser (Android) are fully supported.</p>
             </div>
             <div class="guide-box ios-box">
-                <h3 style="margin-top:0; color:var(--ios-blue);">🍎 iOS (Safari)</h3>
-                <p style="font-size: 14px; line-height: 1.6;">1. Download <b>Userscripts</b> from App Store<br>2. Enable in Safari Settings<br>3. Click the blue button on this site to install <code>Matcha.user.js</code>.</p>
+                <h3 style="margin-top:0; color:var(--ios-blue);">🍎 iOS Status</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #555;">Due to Safari sandbox updates, scripts are not executing on iOS at this time. Use PC for best results.</p>
             </div>
         </div>
 
-        <div id="credits" class="content-section" style="text-align: center;">
+        <div id="credits" class="content-section">
             <h2 style="color:var(--matcha-dark)">Project Intelligence</h2>
             <p style="margin-bottom: 25px;">Developed by Ven0x.</p>
             <div style="border-top: 1px solid #eee; padding-top: 15px; text-align: left; display: inline-block;">
                 <p><b>Lead Developer:</b> Ven0x</p>
-                <p><b>GitHub:</b> NotVen0x</p>
-                <p><b>Revision:</b> 2026</p>
+                <p><b>Status:</b> Maintenance Mode (iOS)</p>
             </div>
         </div>
     </div>

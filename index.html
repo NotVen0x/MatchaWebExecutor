@@ -21,12 +21,12 @@
         
         header { margin-bottom: 30px; }
         h1 { font-size: 3rem; color: var(--matcha-dark); margin: 10px 0; }
-        .version-tag { background: var(--matcha-dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; }
+        .version-tag { background: var(--matcha-dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; }
 
         /* Navigation */
         .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .t-btn { 
-            padding: 10px 20px; border: 2px solid var(--matcha-dark); border-radius: 10px;
+            padding: 12px 24px; border: 2px solid var(--matcha-dark); border-radius: 12px;
             cursor: pointer; background: white; font-weight: bold; transition: 0.2s;
         }
         .t-btn.active { background: var(--matcha-dark); color: white; }
@@ -34,18 +34,23 @@
         /* Content Areas */
         .card { 
             background: white; border: 2px solid var(--matcha-accent); border-radius: 20px;
-            padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); min-height: 300px;
+            padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); min-height: 350px;
         }
         .content-section { display: none; text-align: left; animation: fadeIn 0.3s ease; }
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Buttons & Boxes */
+        /* Buttons */
         .dl-btn { 
-            display: block; width: 100%; max-width: 300px; margin: 15px auto;
-            background: var(--matcha-dark); color: white; padding: 15px;
-            text-decoration: none; border-radius: 10px; font-weight: bold;
+            display: block; width: 100%; max-width: 350px; margin: 15px auto;
+            background: var(--matcha-dark); color: white; padding: 18px;
+            text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 14px;
+            transition: transform 0.2s;
         }
+        .dl-btn:hover { transform: scale(1.02); }
+        .dl-ios { background: var(--ios-blue); }
+
+        /* Guide Boxes */
         .guide-box { 
             background: #f8f9fa; border-left: 5px solid var(--matcha-dark);
             padding: 15px; border-radius: 8px; margin-bottom: 15px; 
@@ -59,65 +64,73 @@
 
 <div class="hub-container">
     <header>
-        <span class="version-tag">V3.3 STABLE</span>
+        <span class="version-tag">V3.4 STABLE</span>
         <h1>MATCHA HUB</h1>
-        <p>Lead Developer: <b>Ven0x</b></p>
+        <p>Lead Architect: <b>Ven0x</b></p>
     </header>
 
     <div class="tabs">
-        <div class="t-btn active" onclick="tab('home')">DOWNLOAD</div>
-        <div class="t-btn" onclick="tab('guide')">GUIDES</div>
-        <div class="t-btn" onclick="tab('credits')">CREDITS</div>
+        <div class="t-btn active" onclick="tab(event, 'home')">DOWNLOAD</div>
+        <div class="t-btn" onclick="tab(event, 'guide')">GUIDES</div>
+        <div class="t-btn" onclick="tab(event, 'credits')">CREDITS</div>
     </div>
 
     <div class="card">
         <div id="home" class="content-section active" style="text-align: center;">
-            <h2>Software Releases</h2>
-            <p>Select your version of the Matcha Suite.</p>
-            <a href="https://github.com/Ven0x/MatchaWeb/releases/download/v3/MatchaWeb.zip" class="dl-btn">DOWNLOAD PC/ANDROID (.ZIP)</a>
-            <a href="https://github.com/Ven0x/MatchaWeb/releases/download/v3/Matcha.user.js" class="dl-btn" style="background: var(--ios-blue);">GET IOS SCRIPT HUB</a>
-            <p style="font-size: 12px; margin-top: 15px;">Compatible with Chrome, Kiwi, and Safari.</p>
+            <h2 style="color:var(--matcha-dark)">Software Releases</h2>
+            <p>Official Ven0x Modding Suite for 2026.</p>
+            
+            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+            
+            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
+            
+            <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
+            
+            <p style="font-size: 11px; margin-top: 10px; color: var(--ios-blue); font-weight: bold;">
+                TIP: iOS users must have the "Userscripts" app installed from the App Store.
+            </p>
         </div>
 
         <div id="guide" class="content-section">
             <div class="guide-box">
-                <h3 style="margin-top:0">💻 PC Installation</h3>
-                <p>1. Extract the .zip file.<br>2. Open <code>chrome://extensions</code>.<br>3. Enable Developer Mode.<br>4. Click "Load Unpacked" and select the folder.</p>
+                <h3 style="margin-top:0">💻 PC (Chrome/Brave)</h3>
+                <p>1. Extract the .zip.<br>2. Go to <code>chrome://extensions</code>.<br>3. Enable <b>Developer Mode</b>.<br>4. Load Unpacked.</p>
             </div>
             <div class="guide-box">
                 <h3 style="margin-top:0">📱 Android (Kiwi)</h3>
-                <p>1. Open Kiwi Browser.<br>2. Go to Extensions > Enable Developer Mode.<br>3. Tap "+ (from .zip)" and select the Matcha file.</p>
+                <p>1. Open Kiwi Browser.<br>2. Tap 3-dots > Extensions.<br>3. Enable Developer Mode.<br>4. Tap <b>+ (from .zip)</b>.</p>
             </div>
             <div class="guide-box ios-box">
                 <h3 style="margin-top:0; color:var(--ios-blue);">🍎 iOS (Safari)</h3>
-                <p>1. Install the "Userscripts" app from App Store.<br>2. Enable in Safari Settings.<br>3. Save <code>Matcha.user.js</code> to your Userscripts folder.</p>
+                <p>1. Download "Userscripts" from App Store.<br>2. Enable in Safari Settings.<br>3. Save the <code>Matcha.user.js</code> file into your Safari Userscripts folder.</p>
             </div>
         </div>
 
         <div id="credits" class="content-section">
-            <h2>Project Credits</h2>
+            <h2 style="color:var(--matcha-dark)">Project Credits</h2>
             <p><b>Lead Architect:</b> Ven0x</p>
-            <p><b>Design:</b> Matcha Aesthetic</p>
-            <p><b>GitHub:</b> github.com/Ven0x</p>
-            <hr>
-            <p style="font-size: 14px; text-align: center;">Discord Community Coming Soon...</p>
+            <p><b>GitHub:</b> NotVen0x</p>
+            <p><b>Suite:</b> Cookie Clicker, CPS Test, Roblox Visuals, Cursed Notepad.</p>
+            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+            <p style="font-size: 14px; text-align: center; font-weight: bold;">Discord Server Coming Soon...</p>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 Ven0x Project. All Rights Reserved.
+        &copy; 2026 Ven0x Project &bull; Built for the Modding Community
     </footer>
 </div>
 
 <script>
-    function tab(name) {
-        // Hide all
+    function tab(evt, name) {
+        // Hide all sections
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        // Deactivate all buttons
         document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
         
-        // Show selected
+        // Show current section and button
         document.getElementById(name).classList.add('active');
-        event.currentTarget.classList.add('active');
+        evt.currentTarget.classList.add('active');
     }
 </script>
 

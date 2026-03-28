@@ -3,163 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matcha Hub | Ven0x</title>
+    <title>Matcha Hub | Elite Portal</title>
     <style>
         :root {
             --matcha-dark: #556b2f;
             --matcha-accent: #adc178;
             --matcha-cream: #fefae0;
-            --ios-blue: #007aff;
+            --ios-color: #007aff;
+            --android-color: #3ddc84;
+            --pc-color: #556b2f;
             --status-green: #2ecc71;
             --status-red: #e74c3c;
+            --status-yellow: #f1c40f;
         }
+
         body {
             background: var(--matcha-cream);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0; padding: 15px; color: #283618;
-            display: flex; justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0; padding: 20px; color: #283618;
+            display: flex; justify-content: center; min-height: 100vh;
         }
-        .hub-container { width: 100%; max-width: 800px; text-align: center; }
-        
-        header { margin-bottom: 25px; }
-        h1 { font-size: 2.8rem; color: var(--matcha-dark); margin: 10px 0; letter-spacing: -2px; }
-        .version-tag { background: var(--matcha-dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
-        /* Navigation */
-        .tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .t-btn { 
-            padding: 10px 18px; border: 2px solid var(--matcha-dark); border-radius: 12px;
-            cursor: pointer; background: white; font-weight: bold; transition: 0.2s; font-size: 12px;
+        .portal-container { width: 100%; max-width: 600px; text-align: center; }
+
+        header h1 { font-size: 3rem; color: var(--matcha-dark); margin: 0; letter-spacing: -2px; }
+        .sub-head { opacity: 0.6; font-weight: 800; font-size: 12px; margin-bottom: 30px; }
+
+        /* --- NAVIGATION --- */
+        .main-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .nav-btn { 
+            padding: 12px 20px; border: none; border-radius: 12px; background: white; 
+            font-weight: 900; color: var(--matcha-dark); cursor: pointer; transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .t-btn.active { background: var(--matcha-dark); color: white; }
+        .nav-btn.active { background: var(--matcha-dark); color: white; }
 
-        /* Content Areas */
+        /* --- CARDS & SCREENS --- */
         .card { 
-            background: white; border: 2px solid var(--matcha-accent); border-radius: 24px;
-            padding: 25px; box-shadow: 0 10px 30px rgba(85, 107, 47, 0.1); min-height: 380px;
+            background: white; border-radius: 30px; padding: 30px; 
+            box-shadow: 0 20px 50px rgba(85, 107, 47, 0.1); border: 2px solid var(--matcha-accent);
+            min-height: 400px; position: relative; overflow: hidden;
         }
-        .content-section { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .content-section.active { display: block; }
+        .screen { display: none; animation: slideUp 0.4s ease-out; }
+        .screen.active { display: block; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- DEVICE BUTTONS --- */
+        .device-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .device-card {
+            background: #fafcf6; border: 2px solid #eee; padding: 20px; border-radius: 20px;
+            cursor: pointer; transition: 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between;
+        }
+        .device-card:hover { border-color: var(--matcha-accent); transform: scale(1.02); }
         
-        .dl-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Buttons & Status Indicators */
-        .dl-row { 
-            width: 100%; max-width: 400px; margin: 10px 0; 
-            display: flex; flex-direction: column; align-items: center;
-        }
-        
-        .dl-btn { 
-            display: block; width: 100%;
-            background: var(--matcha-dark); color: white; padding: 18px;
-            text-decoration: none; border-radius: 14px; font-weight: 900; font-size: 14px;
-            box-shadow: 0 4px 0 #3e4f22; transition: all 0.1s;
-        }
-        .dl-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3e4f22; }
-        .dl-ios { background: var(--ios-blue); box-shadow: 0 4px 0 #0056b3; }
-        .dl-ios:active { box-shadow: 0 1px 0 #0056b3; }
-
-        .status-container {
-            display: flex; align-items: center; gap: 8px; margin-top: 8px;
-            font-size: 11px; font-weight: 800; text-transform: uppercase;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .device-info h3 { margin: 0; font-size: 18px; }
+        .status-badge { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 900; margin-top: 5px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
         .dot.green { background: var(--status-green); box-shadow: 0 0 8px var(--status-green); }
         .dot.red { background: var(--status-red); box-shadow: 0 0 8px var(--status-red); }
+        .dot.yellow { background: var(--status-yellow); box-shadow: 0 0 8px var(--status-yellow); }
 
-        /* Guide Boxes */
-        .guide-box { 
-            background: #fcfdfa; border: 1px solid #eee; border-left: 6px solid var(--matcha-dark);
-            padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: left;
+        /* --- DOWNLOAD BUTTONS --- */
+        .dl-main-btn {
+            display: block; width: 100%; padding: 20px; border-radius: 15px; border: none;
+            color: white; font-weight: 900; font-size: 16px; cursor: pointer; margin-top: 20px;
+            text-decoration: none; text-align: center;
         }
-        .ios-box { border-left-color: var(--ios-blue); background: #f7fbff; }
+        .back-btn { background: none; border: none; color: var(--matcha-dark); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
 
-        footer { margin-top: 40px; font-size: 11px; opacity: 0.5; font-weight: bold; }
+        /* --- GUIDE STYLING --- */
+        .guide-content { text-align: left; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-top: 20px; border-left: 5px solid var(--matcha-dark); }
+        .guide-content ol { padding-left: 20px; font-size: 14px; line-height: 1.6; }
+
+        footer { margin-top: 40px; opacity: 0.4; font-size: 10px; font-weight: 800; }
     </style>
 </head>
 <body>
 
-<div class="hub-container">
+<div class="portal-container">
     <header>
-        <span class="version-tag">STABLE BUILD 3.8</span>
-        <h1>MATCHA HUB</h1>
-        <p>Lead Architect: <b>Ven0x</b></p>
+        <h1>MATCHA</h1>
+        <div class="sub-head">PREMIUM WEB EXECUTOR PORTAL</div>
     </header>
 
-    <div class="tabs">
-        <div class="t-btn active" onclick="tab(this, 'home')">DOWNLOAD</div>
-        <div class="t-btn" onclick="tab(this, 'guide')">INSTALLATION</div>
-        <div class="t-btn" onclick="tab(this, 'credits')">CREDITS</div>
-    </div>
+    <nav class="main-nav" id="main-nav">
+        <button class="nav-btn active" onclick="showScreen('home')">MAIN</button>
+        <button class="nav-btn" onclick="showScreen('download')">DOWNLOAD</button>
+        <button class="nav-btn" onclick="showScreen('credits')">CREDITS</button>
+    </nav>
 
     <div class="card">
-        <div id="home" class="content-section active">
-            <h2 style="color:var(--matcha-dark); margin-bottom: 5px;">Releases</h2>
-            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 20px;">Check the status of the executor below.</p>
-            
-            <div class="dl-area">
-                <div class="dl-row">
-                    <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip" class="dl-btn">DOWNLOAD PC / ANDROID (.ZIP)</a>
-                    <div class="status-container" style="color: var(--status-green);">
-                        <div class="dot green"></div> Working
-                    </div>
-                </div>
-                
-                <div class="dl-row">
-                    <a href="https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js" class="dl-btn dl-ios">GET IOS SCRIPT HUB (.JS)</a>
-                    <div class="status-container" style="color: var(--status-red);">
-                        <div class="dot red"></div> Not Working
-                    </div>
-                </div>
-            </div>
-            
-            <p style="font-size: 11px; color: #666; font-weight: bold; background: #f5f5f5; display: inline-block; padding: 8px 15px; border-radius: 50px; margin-top: 25px;">
-                Update: iOS injection is currently blocked by Apple Security. 
-            </p>
-        </div>
-
-        <div id="guide" class="content-section">
-            <div class="guide-box">
-                <h3 style="margin-top:0">💻 Windows / Mac / Android</h3>
-                <p style="font-size: 14px; line-height: 1.6;">Use the .zip version for the full experience. PC and Kiwi Browser (Android) are fully supported.</p>
-            </div>
-            <div class="guide-box ios-box">
-                <h3 style="margin-top:0; color:var(--ios-blue);">🍎 iOS Status</h3>
-                <p style="font-size: 14px; line-height: 1.6; color: #555;">Due to Safari sandbox updates, scripts are not executing on iOS at this time. Use PC for best results.</p>
+        <div id="home" class="screen active">
+            <h2 style="color:var(--matcha-dark)">Welcome, Architect</h2>
+            <p>Matcha is the world's first cross-platform web executor designed for performance and bypass safety.</p>
+            <div style="margin-top:40px; padding:20px; background:#f0f4e8; border-radius:20px;">
+                <p style="font-size:13px; font-weight:bold;">LATEST NEWS:</p>
+                <p style="font-size:12px;">Vercel Hub is live. iOS Sandbox research in progress. Android support confirmed via Kiwi.</p>
             </div>
         </div>
 
-        <div id="credits" class="content-section">
-            <h2 style="color:var(--matcha-dark)">Project Intelligence</h2>
-            <p style="margin-bottom: 25px;">Developed by Ven0x.</p>
-            <div style="border-top: 1px solid #eee; padding-top: 15px; text-align: left; display: inline-block;">
-                <p><b>Lead Developer:</b> Ven0x</p>
-                <p><b>Status:</b> Maintenance Mode (iOS)</p>
+        <div id="download" class="screen">
+            <h2 style="margin-bottom:5px;">Select Device</h2>
+            <p style="font-size:12px; opacity:0.6;">Choose your platform for specialized files.</p>
+            
+            <div class="device-grid">
+                <div class="device-card" onclick="showDeviceMenu('pc')">
+                    <div class="device-info">
+                        <h3>Windows / MacOS</h3>
+                        <div class="status-badge" style="color:var(--status-green)"><div class="dot green"></div> WORKING</div>
+                    </div>
+                    <span>➔</span>
+                </div>
+                <div class="device-card" onclick="showDeviceMenu('android')">
+                    <div class="device-info">
+                        <h3>Android</h3>
+                        <div class="status-badge" style="color:var(--status-yellow)"><div class="dot yellow"></div> NOT TESTED</div>
+                    </div>
+                    <span>➔</span>
+                </div>
+                <div class="device-card" onclick="showDeviceMenu('ios')">
+                    <div class="device-info">
+                        <h3>iPhone / iPad</h3>
+                        <div class="status-badge" style="color:var(--status-red)"><div class="dot red"></div> NOT WORKING</div>
+                    </div>
+                    <span>➔</span>
+                </div>
             </div>
+        </div>
+
+        <div id="device-menu" class="screen">
+            <button class="back-btn" onclick="showScreen('download')">← Back to Platforms</button>
+            <h2 id="device-title">Platform</h2>
+            
+            <a id="dl-link" href="#" class="dl-main-btn">DOWNLOAD EXECUTOR</a>
+
+            <div class="guide-content">
+                <h4 style="margin:0 0 10px 0;">INSTALLATION GUIDE:</h4>
+                <div id="device-guide"></div>
+            </div>
+        </div>
+
+        <div id="credits" class="screen">
+            <h2 style="color:var(--matcha-dark)">The Team</h2>
+            <p>Project Lead: <b>Ven0x</b></p>
+            <p>Cloud Distribution: <b>Vercel Edge</b></p>
+            <p style="font-size:12px; margin-top:50px;">"Building the future of web-based injection."</p>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 VEN0X &bull; MATCHA WEB EXECUTOR
-    </footer>
+    <footer>&copy; 2026 MATCHA HUB &bull; VEN0X DEVELOPMENT</footer>
 </div>
 
 <script>
-    function tab(btn, name) {
-        const sections = document.getElementsByClassName('content-section');
-        for (let s of sections) { s.classList.remove('active'); }
-        const buttons = document.getElementsByClassName('t-btn');
-        for (let b of buttons) { b.classList.remove('active'); }
-        document.getElementById(name).classList.add('active');
-        btn.classList.add('active');
+    const deviceData = {
+        pc: {
+            title: "PC / Desktop",
+            color: "#556b2f",
+            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip",
+            guide: "<ol><li>Download the .zip file.</li><li>Extract to a folder.</li><li>Load as Unpacked Extension in Chrome/Edge.</li><li>Visit any game site and hit Right-Shift.</li></ol>"
+        },
+        android: {
+            title: "Android Mobile",
+            color: "#3ddc84",
+            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/MatchaWeb-V3.zip",
+            guide: "<ol><li>Install <b>Kiwi Browser</b> from Play Store.</li><li>Download the .zip file.</li><li>In Kiwi, go to 'Extensions' and enable 'Developer Mode'.</li><li>Click 'Load .zip' and select the file.</li></ol>"
+        },
+        ios: {
+            title: "iOS (Apple)",
+            color: "#007aff",
+            link: "https://github.com/NotVen0x/MatchaWebExecutor/releases/download/Matcha/Matcha.user.js",
+            guide: "<ol><li>Install <b>Userscripts</b> or <b>Tampermonkey</b> from App Store.</li><li>Enable the extension in Safari Settings.</li><li>Click the download button above to install the .js file.</li><li>Note: Currently in maintenance mode.</li></ol>"
+        }
+    };
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        // Update Nav Buttons
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if(id === 'home' || id === 'download' || id === 'credits') {
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                if(b.innerText.toLowerCase() === id) b.classList.add('active');
+            });
+        }
+    }
+
+    function showDeviceMenu(device) {
+        const data = deviceData[device];
+        document.getElementById('device-title').innerText = data.title;
+        document.getElementById('device-title').style.color = data.color;
+        
+        const dlBtn = document.getElementById('dl-link');
+        dlBtn.href = data.link;
+        dlBtn.style.backgroundColor = data.color;
+        
+        document.getElementById('device-guide').innerHTML = data.guide;
+        
+        showScreen('device-menu');
     }
 </script>
 

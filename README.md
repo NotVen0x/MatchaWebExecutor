@@ -124,4 +124,6 @@ See [LICENSE.txt](LICENSE.txt) for full terms.
 
 ---
 
-2026 Matcha Hub · Ven0x Development
+<div align="center">
+  <sub>© 2026 Matcha Hub · Ven0x Development</sub>
+</div>
